@@ -8,3 +8,4 @@ to install the latest version.
 
 to install a new version of tesseract-ocr on windows, visit the following link:
 https://github.com/UB-Mannheim/tesseract/wiki
+or you can install it from .exe tesserac-orc that I have already included.
