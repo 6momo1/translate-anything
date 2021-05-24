@@ -17,7 +17,7 @@ class DominantColors:
     def dominantColors(self) -> List[List[int]]:
 
         # read image
-        img = cv2.imread(self.IMAGE)
+        img = self.IMAGE
 
         # convert to rgb from bgr
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -42,8 +42,8 @@ class DominantColors:
         return self.COLORS.astype(int)
 
 
-img = './assets/crayon.jpg'
-clusters = 5
-dc = DominantColors(img, clusters)
-colors = dc.dominantColors()
-print(colors)
+# img = './assets/crayon.jpg'
+# clusters = 5
+# dc = DominantColors(img, clusters)
+# colors = dc.dominantColors()
+# print(colors)

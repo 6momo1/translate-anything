@@ -1,18 +1,21 @@
 
 import cv2
 import pytesseract
+from dominant_color_extractor import DominantColors
 
 pytesseract.pytesseract.tesseract_cmd = "C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
 
 img = cv2.imread('./assets/musk_tweet.png')
-# img = cv2.imread('./assets/twttr.png')
+
+# get the dominant color of this image (background color)
+clusters = 5
+dc = DominantColors(img, clusters)
+colors = dc.dominantColors()
+colors = colors.tolist()
 
 img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-# img = cv2.resize(img, (0, 0), fx=2, fy=2)
-# print(pytesseract.image_to_string(img))
 
 hImg, wImg, imgDimension = img.shape
-
 
 # Detect words
 boxes = pytesseract.image_to_data(img)
@@ -34,7 +37,8 @@ for num, string in enumerate(boxes.splitlines()):
                 img,
                 (x, y),
                 (w+x, y+h),
-                (0, 0, 200), 1
+                colors[0],
+                -1
             )
 
             # label the word
@@ -44,7 +48,7 @@ for num, string in enumerate(boxes.splitlines()):
                 (x, y-5),
                 cv2.FONT_HERSHEY_COMPLEX_SMALL,
                 1,
-                (0, 0, 200),
+                (0, 0, 0),
                 1
             )
 
