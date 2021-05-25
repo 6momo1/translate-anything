@@ -32,13 +32,12 @@ for string in boxes.splitlines():
     cv2.putText(
         img,
         char,
-        (xbox, hImg-ybox+15),
-        cv2.FONT_HERSHEY_COMPLEX_SMALL,
-        1,
+        (xbox, hImg-ybox),
+        cv2.FONT_HERSHEY_TRIPLEX,
+        2,
         (0, 0, 200),
         1
     )
 
 cv2.imshow('Result', img)
-
 cv2.waitKey(0)

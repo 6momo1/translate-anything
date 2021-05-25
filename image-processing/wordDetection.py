@@ -2,8 +2,11 @@
 import cv2
 import pytesseract
 from dominant_color_extractor import DominantColors
+from PIL import ImageFont
+
 
 pytesseract.pytesseract.tesseract_cmd = "C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
+
 
 img = cv2.imread('./assets/musk_tweet.png')
 
@@ -47,8 +50,8 @@ for num, string in enumerate(boxes.splitlines()):
             cv2.putText(
                 img,
                 word,
-                (x, y-5),
-                cv2.FONT_HERSHEY_COMPLEX_SMALL,
+                (x, y+h),
+                cv2.FONT_HERSHEY_DUPLEX,
                 1,
                 (0, 0, 0),
                 1
