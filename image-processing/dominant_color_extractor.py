@@ -40,10 +40,3 @@ class DominantColors:
 
         # returning after converting to integer from float
         return self.COLORS.astype(int)
-
-
-# img = './assets/crayon.jpg'
-# clusters = 5
-# dc = DominantColors(img, clusters)
-# colors = dc.dominantColors()
-# print(colors)

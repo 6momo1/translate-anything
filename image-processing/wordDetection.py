@@ -13,18 +13,20 @@ dc = DominantColors(img, clusters)
 colors = dc.dominantColors()
 colors = colors.tolist()
 
+# convert bgr to rgb
 img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
+# get image dimensions
 hImg, wImg, imgDimension = img.shape
 
 # Detect words
 boxes = pytesseract.image_to_data(img)
 for num, string in enumerate(boxes.splitlines()):
 
-    # if we are not reading the first column from the boxes string, then:
+    # if we are not reading the first column from the boxes string, then...
     if num != 0:
 
-        # box cordinate information
+        # split box cordinate information
         boxInfo = string.split()
         if len(boxInfo) == 12:
 
