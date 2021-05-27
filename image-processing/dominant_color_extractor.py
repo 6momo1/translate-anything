@@ -1,3 +1,8 @@
+"""
+
+this module calculates the dominant color in an image. 
+
+"""
 import cv2
 from sklearn.cluster import KMeans
 from typing import List

@@ -1,18 +1,22 @@
+"""
 
+this module detects words on a image and displays a translation on top of it 
+
+"""
 import cv2
 import pytesseract
 from dominant_color_extractor import DominantColors
-from PIL import ImageFont
 
 
 pytesseract.pytesseract.tesseract_cmd = "C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
 
 
-img = cv2.imread('./assets/musk_tweet.png')
+original = cv2.imread('./assets/amazon.png')
+img = original.copy()
 
 # get the dominant color of this image (background color)
 clusters = 5
-dc = DominantColors(img, clusters)
+dc = DominantColors(original, clusters)
 colors = dc.dominantColors()
 colors = colors.tolist()
 
@@ -24,6 +28,8 @@ hImg, wImg, imgDimension = img.shape
 
 # Detect words
 boxes = pytesseract.image_to_data(img)
+
+# iterate through words
 for num, string in enumerate(boxes.splitlines()):
 
     # if we are not reading the first column from the boxes string, then...
@@ -39,16 +45,17 @@ for num, string in enumerate(boxes.splitlines()):
 
             # draw the rectangle
             cv2.rectangle(
-                img,
+                original,
                 (x, y),
                 (w+x, y+h),
-                colors[0],
+                colors[1],
+                # (255, 255, 255),
                 -1
             )
 
             # label the word
             cv2.putText(
-                img,
+                original,
                 word,
                 (x, y+h),
                 cv2.FONT_HERSHEY_DUPLEX,
@@ -58,6 +65,6 @@ for num, string in enumerate(boxes.splitlines()):
             )
 
 
-cv2.imshow('Result', img)
+cv2.imshow('Result', original)
 
 cv2.waitKey(0)
