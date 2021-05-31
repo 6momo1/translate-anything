@@ -30,14 +30,14 @@ class Application():
                                command=self.select_ROI)
         self.btn_snip.grid(row=0, column=0, sticky="nsew")
 
-        # button translate from
+        # option translate from
         self.curr_lang_from = StringVar(master)
         self.curr_lang_from.set("en")
         self.btn_translate_from = OptionMenu(
             self.nav_bar, self.curr_lang_from, "en")
         self.btn_translate_from.grid(row=0, column=1, sticky="nsew")
 
-        # button translate to
+        # option translate to
         self.curr_lang_to = StringVar(master)
         self.curr_lang_to.set("cn")
         self.btn_translate_to = OptionMenu(
@@ -50,39 +50,55 @@ class Application():
         self.textbox.insert(END, placeholder)
         self.textbox.pack()
 
-        # roi canvas ( screen selectable )
+        # set ROI_window ( allow user to select region of interest )
         self.ROI_window = Toplevel()
         self.ROI_window.attributes("-alpha", .8)
+
+        # create ROI_frame, master -> ROI_window
         self.ROI_frame = Frame(self.ROI_window, background="#8698b0")
         self.ROI_frame.pack(fill=BOTH, expand=YES)
+
+        # hide ROI_window for now
         self.ROI_window.withdraw()
 
     def select_ROI(self):
 
         print("selectROI clicked")
 
-        self.roi_canvas.attributes('-fullscreen', True)
-        self.roi_canvas.attributes('-alpha', .2)
-        self.roi_canvas.attributes("-topmost", True)
-        # self.roi_canvas.lift()
+        # create ROI_canvas
+        self.ROI_canvas = Canvas(self.ROI_frame, cursor="cross", bg="#696969")
+        self.ROI_canvas.pack(fill=BOTH, expand=YES)
+
+        # set ROI_window attributes
+        self.ROI_window.attributes('-fullscreen', True)
+        self.ROI_window.attributes('-alpha', .2)
+        self.ROI_window.attributes("-topmost", True)
+
+        self.ROI_window.lift()
+
+        # withdraw master
         self.master.withdraw()  # hide master
-        self.roi_canvas.deiconify()  # show roi_canvas
+
+        # display ROI_canvas
+        self.ROI_window.deiconify()  # show roi_canvas
 
         # bind buttons
-        self.roi_canvas.bind("<buttonPress-1>", self.on_left_click)
-        self.roi_canvas.bind("<B1-Motion>", self.on_mouse_drag)
-        self.roi_canvas.bind("<ButtonRelease-1>", self.on_mouse_release)
+        self.ROI_canvas.bind("<Button>", self.on_left_click)
+        self.ROI_canvas.bind("<Motion>", self.on_mouse_drag)
+        self.ROI_canvas.bind("<ButtonRelease>", self.on_mouse_release)
 
-    def on_left_click(self):
-        print("left mouse button clicked ")
+    def on_left_click(self, a):
+        print("left mouse button clicked!")
 
-    def on_mouse_drag(self):
+    def on_mouse_drag(self, a):
         print("mouse dragging")
 
-    def on_mouse_release(self):
+    def on_mouse_release(self, a):
         print("Mouse released")
-        self.roi_canvas.withdraw()
-        self.master.deconify()
+
+        self.ROI_canvas.destroy()
+        self.ROI_window.withdraw()
+        self.master.deiconify()
 
     def snip(self, left, top, width, height):
         """
