@@ -5,12 +5,13 @@ from process_image import process_image
 class Application():
     """
     This is a class for the GUI for screen snipping text.
-
-    Attributes:
-        master (Tk()): Required to start the tkinter GUI.
     """
 
     def __init__(self, master) -> None:
+        """
+        Aplication constructor.
+        initiate variables here
+        """
 
         self.master = master
         self.master.geometry("350x300+500+300")
@@ -25,6 +26,7 @@ class Application():
         self.curY   = None
 
         self.text = ""
+        self.rect = None
 
         # nav bar frame
         self.nav_bar = Frame(self.master, height=20, width=50)
@@ -73,6 +75,9 @@ class Application():
         self.ROI_window.withdraw()
 
     def select_ROI(self):
+        """
+        initiate screenshot phase
+        """
 
         print("selectROI clicked")
 
@@ -99,7 +104,9 @@ class Application():
         self.ROI_canvas.bind("<ButtonRelease>", self.on_mouse_release)
 
     def on_left_click(self, event):
-        print("left mouse button clicked!")
+        """
+        handle mouse click event
+        """
 
         # save mouse drag start position
         self.startX = self.ROI_canvas.canvasx(event.x)
@@ -109,6 +116,10 @@ class Application():
 
 
     def on_mouse_drag(self, event):
+        """
+        handle mouse drag event
+        """
+
 
         # update mouse location as it moves
         self.curX, self.curY = (event.x, event.y)
@@ -117,7 +128,9 @@ class Application():
         self.ROI_canvas.coords(self.rect, self.startX, self.startY, self.curX, self.curY)
 
     def on_mouse_release(self, event):
-        print("Mouse released")
+        """
+        handle mouse relase event
+        """
 
         # exit screenshot mode
         
@@ -138,10 +151,13 @@ class Application():
         self.ROI_canvas.destroy()
         self.ROI_window.withdraw()
         self.master.deiconify()
+        
+        self.textbox.delete("1.0",END)
+        self.textbox.insert(END,self.text)
 
     def screenshot(self, left, top, width, height):
         """
-        The method to take a screenshot given an area.
+        This method takes a screenshot on a given area
         Parameters:
             left (int): The left position.
             top (int): The top position.
@@ -152,13 +168,17 @@ class Application():
         im.save(".capture.png")
 
     def exitScreenshotMode(self):
-        """ Method to exit the selecting mode. """
+        """ 
+        Method to exit the selecting mode. 
+        """
         self.screenCanvas.destroy()
         self.master_screen.withdraw()
         self.master.deiconify()
 
     def exit_application(self):
-        """ Method to end the application. """
+        """ 
+        Method to end the application. 
+        """
         self.master.quit()
 
 
