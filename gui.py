@@ -1,6 +1,6 @@
 from tkinter import *
 import pyautogui
-
+from process_image import process_image
 
 class Application():
     """
@@ -14,6 +14,17 @@ class Application():
 
         self.master = master
         self.master.geometry("350x300+500+300")
+
+
+        # initiate variables for screen capture
+        self.x = self.y = 0
+        self.rect   = None
+        self.startX = None
+        self.startY = None  
+        self.curX   = None
+        self.curY   = None
+
+        self.text = ""
 
         # nav bar frame
         self.nav_bar = Frame(self.master, height=20, width=50)
@@ -87,20 +98,48 @@ class Application():
         self.ROI_canvas.bind("<Motion>", self.on_mouse_drag)
         self.ROI_canvas.bind("<ButtonRelease>", self.on_mouse_release)
 
-    def on_left_click(self, a):
+    def on_left_click(self, event):
         print("left mouse button clicked!")
 
-    def on_mouse_drag(self, a):
-        print("mouse dragging")
+        # save mouse drag start position
+        self.startX = self.ROI_canvas.canvasx(event.x)
+        self.startY = self.ROI_canvas.canvasy(event.y)
 
-    def on_mouse_release(self, a):
+        self.rect = self.ROI_canvas.create_rectangle(self.x, self.y, 1, 1, outline='#dbf3ff', width=2)
+
+
+    def on_mouse_drag(self, event):
+
+        # update mouse location as it moves
+        self.curX, self.curY = (event.x, event.y)
+
+        # update rectangle as mouse is draged
+        self.ROI_canvas.coords(self.rect, self.startX, self.startY, self.curX, self.curY)
+
+    def on_mouse_release(self, event):
         print("Mouse released")
+
+        # exit screenshot mode
+        
+        # get location
+        left   = min(self.startX, self.curX)
+        top    = min(self.startY, self.curY)
+        width  = abs(self.startX - self.curX)
+        height = abs(self.startY - self.curY)
+
+        # screen shot the picture
+        self.screenshot(left, top, width, height)
+
+
+        # process image
+        self.text = process_image('./.capture.png').get_text()
+        print(self.text)
 
         self.ROI_canvas.destroy()
         self.ROI_window.withdraw()
         self.master.deiconify()
 
-    def snip(self, left, top, width, height):
+    def screenshot(self, left, top, width, height):
         """
         The method to take a screenshot given an area.
         Parameters:
