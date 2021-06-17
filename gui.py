@@ -1,6 +1,8 @@
 from tkinter import *
 import pyautogui
 from process_image import process_image
+from translator import App_Translator
+
 
 class Application():
     """
@@ -31,7 +33,7 @@ class Application():
         # nav bar frame
         self.nav_bar = Frame(self.master, height=20, width=50)
         self.nav_bar.rowconfigure(0, minsize=50, weight=1)
-        self.master.columnconfigure([0, 1, 2], minsize=50, weight=1)
+        self.master.columnconfigure([0, 1, 2,3], minsize=50, weight=1)
         self.nav_bar.pack(side=TOP)
 
         # textbox frame
@@ -52,10 +54,14 @@ class Application():
 
         # option translate to
         self.curr_lang_to = StringVar(master)
-        self.curr_lang_to.set("cn")
+        self.curr_lang_to.set("zh-cn")
         self.btn_translate_to = OptionMenu(
             self.nav_bar, self.curr_lang_to, "en", "jp")
         self.btn_translate_to.grid(row=0, column=2, sticky="nsew")
+
+        # button translate
+        self.btn_translate = Button(self.nav_bar, text="translate", command=self.translate)
+        self.btn_translate.grid(row=0, column=3,sticky="nsew" )
 
         # textbox
         self.textbox = Text(self.textframe)
@@ -73,6 +79,13 @@ class Application():
 
         # hide ROI_window for now
         self.ROI_window.withdraw()
+
+
+
+    def translate(self):
+        translated_text = App_Translator().translate(self.text, self.curr_lang_from.get(), self.curr_lang_to.get())
+        self.textbox.insert(0, translated_text)
+
 
     def select_ROI(self):
         """
@@ -119,7 +132,6 @@ class Application():
         """
         handle mouse drag event
         """
-
 
         # update mouse location as it moves
         self.curX, self.curY = (event.x, event.y)

@@ -1,9 +1,14 @@
 from googletrans import Translator
 
-translator = Translator()
 
-output = translator.translate("this is a test",dest="zh-cn")
+class App_Translator:
 
-print(output.text)
+    def translate(self, text:str, src:str, to:str) -> str:
+        """
+        this function translates text to a given language
+        """
+        translator = Translator()
+        output = translator.translate(text,src=src, dest=to)
+        return output.text
 
 
