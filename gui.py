@@ -84,7 +84,8 @@ class Application():
 
     def translate(self):
         translated_text = App_Translator().translate(self.text, self.curr_lang_from.get(), self.curr_lang_to.get())
-        self.textbox.insert(0, translated_text)
+        self.textbox.delete("1.0",END)
+        self.textbox.insert(END,translated_text)
 
 
     def select_ROI(self):
