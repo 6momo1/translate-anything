@@ -2,6 +2,8 @@
 
 ### About:
 this module allows users to easily copy and extract text from images and pdf documents and translate them.   
+![Alt Text](./readme-assets/image.gif)
+
 
 ### Run:
 run the main file in your command line with ` $ python main.py`
