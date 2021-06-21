@@ -47,16 +47,40 @@ class Application():
 
         # option translate from
         self.curr_lang_from = StringVar(master)
+
         self.curr_lang_from.set("en")
+        self.curr_lang_from.set("fr")
+        self.curr_lang_from.set("zh-cn")
+        self.curr_lang_from.set("de")
+        self.curr_lang_from.set("hi")
+        self.curr_lang_from.set("ja")
+        self.curr_lang_from.set("ko")
+        self.curr_lang_from.set("fa")
+        self.curr_lang_from.set("pt")
+        self.curr_lang_from.set("ru")
+        self.curr_lang_from.set("es")
+
         self.btn_translate_from = OptionMenu(
-            self.nav_bar, self.curr_lang_from, "en")
+            self.nav_bar, self.curr_lang_from, "en" ,"fr" ,"zh-cn" ,"de" ,"hi" ,"ja" ,"ko" ,"fa" ,"pt" ,"ru" )
         self.btn_translate_from.grid(row=0, column=1, sticky="nsew")
 
         # option translate to
         self.curr_lang_to = StringVar(master)
+        # set langauges
+        self.curr_lang_to.set("en")
+        self.curr_lang_to.set("fr")
         self.curr_lang_to.set("zh-cn")
+        self.curr_lang_to.set("de")
+        self.curr_lang_to.set("hi")
+        self.curr_lang_to.set("ja")
+        self.curr_lang_to.set("ko")
+        self.curr_lang_to.set("fa")
+        self.curr_lang_to.set("pt")
+        self.curr_lang_to.set("ru")
+        self.curr_lang_to.set("es")
+
         self.btn_translate_to = OptionMenu(
-            self.nav_bar, self.curr_lang_to, "en", "jp")
+            self.nav_bar, self.curr_lang_to, "en" ,"fr" ,"zh-cn" ,"de" ,"hi" ,"ja" ,"ko" ,"fa" ,"pt" ,"ru" )
         self.btn_translate_to.grid(row=0, column=2, sticky="nsew")
 
         # button translate
@@ -65,7 +89,7 @@ class Application():
 
         # textbox
         self.textbox = Text(self.textframe)
-        placeholder = "中文"
+        placeholder = "Place Holder"
         self.textbox.insert(END, placeholder)
         self.textbox.pack()
 
@@ -195,11 +219,7 @@ class Application():
         self.master.quit()
 
 
-def main():
+def run():
     root = Tk()
     app = Application(root)
     root.mainloop()
-
-
-if __name__ == "__main__":
-    main()
