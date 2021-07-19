@@ -1,4 +1,4 @@
-# camera-translation
+# Translate Anything!
 
 ### About:
 This module allows users to easily copy and extract text from images and pdf documents and translate them.   
